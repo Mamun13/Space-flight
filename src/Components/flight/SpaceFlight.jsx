@@ -3,8 +3,12 @@ import { Col, Container, Row } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import FlightCard from "./FlightCard";
+import { useState } from "react";
 
 const SpaceFlight = () => {
+  const [search, setSearch] = useState('');
+  const [status, setStatus] = useState('');
+
   return (
     <>
       <section>
@@ -21,13 +25,15 @@ const SpaceFlight = () => {
             <Form>
               <Row>
                 <Col lg={6} md={6}>
-                  <div className="d-flex px-3 mb-3">
+                  <div className="d-flex mb-3">
                     <input
                       type="search"
                       className="form-control search_form"
                       placeholder="search in here"
+                      value={search}
+                      onChange={(e)=>setSearch(e.target.value)}
                     />
-                    <Button variant="primary" className="rounded-0">
+                    <Button variant="primary" className="search_form2" onClick={() => setSearch(search)}>
                       Search
                     </Button>{" "}
                   </div>
@@ -37,17 +43,19 @@ const SpaceFlight = () => {
                     <Col lg={6} md={6}>
                       <Form.Select
                         aria-label="Default select example"
-                        className="mx-2 mx-sm-0 rounded-1"
+                        className=" mb-3 rounded-1"
+                        value={status}
+                        onChange={e => setStatus(e.target.value)}
                       >
                         <option>Select status</option>
-                        <option value="1">Success</option>
-                        <option value="2">failure</option>
+                        <option value="success">Success</option>
+                        <option value="failed">failure</option>
                       </Form.Select>
                     </Col>
                     <Col lg={6} md={6}>
                       <Form.Select
                         aria-label="Default select example"
-                        className="mx-2 mx-sm-0 rounded-1"
+                        className="rounded-1"
                       >
                         <option>Select status</option>
                         <option value="1">week</option>
@@ -60,7 +68,7 @@ const SpaceFlight = () => {
               </Row>
             </Form>
           </div>
-          <FlightCard />
+          <FlightCard search={search} status={status}/>
         </Container>
       </section>
     </>
