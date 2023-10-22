@@ -33,7 +33,6 @@ const SpaceFlight = () => {
                   </div>
                 </Col>
                 <Col lg={6} md={6}>
-                  `1  `
                   <Row>
                     <Col lg={6} md={6}>
                       <Form.Select
