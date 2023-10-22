@@ -4,8 +4,10 @@ import Flight from "../../asset/02.png";
 import "./FlightCard.css";
 import { useState, useEffect } from "react";
 
-const FlightCard = () => {
+const FlightCard = ({ search, status }) => {
   const [data, setData] = useState([]);
+  const [searchResults, setSearchResults] = useState(search);
+  const [filter, setFilter] = useState({ status: status });
 
   const formatDate = (d) => {
     const date = new Date(d);
@@ -21,18 +23,27 @@ const FlightCard = () => {
     const allproduct = await response.json();
     setData(allproduct);
   };
-  console.log(data);
 
   useEffect(() => {
     getData();
   }, []);
+  useEffect(() => {
+    setFilter({...filter, status: status})
+  })
+
+  const filteredLaunches = data.filter((launch) => {
+    if (search !== "f") {
+      const searchLowerCase = search.toLowerCase();
+      return launch.mission_name.toLowerCase().includes(searchLowerCase);
+    }
+  });
 
   return (
     <>
       <section className="mt-5 px-1">
         <Container>
           <Row>
-            {data.map((curElem, index) => {
+            {filteredLaunches.map((curElem, index) => {
               return (
                 <>
                   <Col lg={4} md={6} className="mb-3" key={index}>
